@@ -1,0 +1,120 @@
+# shell                 ksh
+#
+# ===============================================================
+# VARIABLES - Strings
+# ===============================================================
+#
+# some notes on COLOR before explaining its use in
+# the commands caption, hardstatus, and sorendition.
+#
+# COLOR:  colors codes are combinations of
+# [attribute modifier] [color description]
+# the manual talks of "attribute/color modifiers".
+# see the manual, section "STRING ESCAPES".
+#
+# Color table:
+# 0 Black             .    leave color unchanged
+# 1 Red               b    blue
+# 2 Green             c    cyan
+# 3 Brown / yellow    d    default color
+# 4 Blue              g    green           b    bold
+# 5 Purple            k    blacK           B    blinking
+# 6 Cyan              m    magenta         d    dim
+# 7 White             r    red             r    reverse
+# 8 unused/illegal    w    white           s    standout
+# 9 transparent       y    yellow          u    underline
+#
+# note: "dim" is not mentioned in the manual.
+#
+# ===========================================
+# CAPTION - shows a "caption" for the window.
+# ===========================================
+# a "caption" is another line which can show information -
+# in addition to the hardstatus line.
+#
+# use caption to show window list:
+# caption always "%{= kc}%?%-Lw%?%{= kY}%n*%f %t%?(%u)%?%{= kc}%?%+Lw%?"
+#
+# caption always '%{= wb}%50=%n%f %t%{= wb}'
+# this basically just shows the current window number and title
+# on its own; the "%50=" displays it in the middle of the line.
+#
+# "push right border: current time with seconds and current date"
+# caption always "%=%c:%s %Y-%m-%d"
+#
+# caption always "%>%{wk}%?%-Lw%?%{bw}%n*%f %t%?(%u)%?%{wk}%?%+Lw%?%<"
+# caption always "%-Lw%{= BW}%50>%n%f* %t%{-}%+Lw%<"
+# caption always "%?%F%{.RW}%?%3n %t%? [%h]%?"
+# caption always "%{rk}%H %{gk}%c %{yk}%M%d %{wk}%?%-Lw%?%{bw}%n*%f %t%?(%u)%?%{wk}%?%+Lw%?"
+# caption always "%{kG}%?%-Lw%?%{bw}%n*%f %t%?(%u)%?%{kG}%?%+Lw%?"
+# caption always "%{rk}%H %{gk}%c %{yk}%M%d %{wk}%?%-Lw% ?%{bw}%n*%f %t%?(%u)%?%{wk}%?%+Lw%?"
+# caption always "%{rk}%H%{gk} | %c %{yk}%d.%m.%Y | %?%-Lw%?%{bw}%n*%f %t%?(%u)%?%{wk}%?%+Lw%? | %{rk} Load: %l %{wk}"
+# caption always "%{=}%{+b kR}%H %{+b kY}%M %d %{+b kG}%0c %{+b kB}%?%-Lw%?%{+b kW}%n*%f %kt%?(%u)%?%{+bkB}%?%+Lw%? | %{kR} Load: %l %{kB}"
+# caption always "%{=}%{+b kR}%H %{+b kY}%M %d %{+b kG}%0c %{+b kB}%?%-Lw%?%{+b kW}%n*%f %kt%?(%u)%?%{+bkB}%?%+Lw%? | %{kR} Load: %l %{kB}"
+# caption always '%{-b}%{= wb}%-Lw%{= wr}%{+b}%n%f %t%{= wb}%{-b}%+Lw %{= wr} %=%c %Y-%m-%d'
+
+#  caption always "%{+b rk}%H%{gk} |%C%a %{yk}%Y.%m.%d | %{rw}%n%f%{bk} | %{rw} %t %{bk} | %?%-Lw%?%{bw}%n*%f %t%?(%u)%?%{wk}%?%+Lw%? | %{rk} Load: %l %{wk}"
+
+################ hostname  | 24hourtime  date   | current window - window list | load avg
+
+#defhstatus "screen: ^En ^Eh"
+
+#  caption always "%{+b rk}%H %{bk}|%{yk} %C%a %Y.%m.%d %{bk}|%{rk} Load: %l %{bk}| %{rk}%n%f %t %{bk}| %?%-Lw%?%{bk}%n*%f %t%?(%u)%?%{wk}%?%+Lw%? %{bk}|"
+
+#  caption always "%0=%{+b rk}%H %{bk}| %0L=%{mk} %3L>%-Lw%{= BW}%n%f* %t%{-}%+w %3> |%?(%u)%?| %{bk}|%>%=%{Yk} %C%a %Y.%m.%d %{bk}%100="
+
+################## hostname | windowlist  | <padded right>   04:20:20pm 2006.04.27 date
+#  caption always "%0=%{+b rk}%H %{bk}| %0L=%{mk}%>%-Lw%{= BW}%n%f* %t%{-}%+Lw%L>%?(%u)%? %{bk}|%>%=%{Yk} %=%C:%s%a %Y.%m.%d %{bk}%100="
+################### hostname | windowlist  | <padded right>   04:20pm 2006.04.27 date
+#  caption always "%0=%{+b rk}%H %{bk}| %0L=%{mk}%>%-Lw%{= BW}%n%f* %t%{-}%+Lw%L>%?(%u)%? %{bk}|%>%=%{Yk} %=%C%a %Y.%m.%d %{bk}%100="
+#
+## emerge strokes the %h not the %t          :)
+#  hardstatus on
+################## | hardstatus |             <padded right>  load avg
+#hardstatus alwayslastline "%0=%{kB}| %{kw}%h %{kB}|%=%{kR}Load: %l%100="
+#
+#bindkey ^[[1;5D prev # ctrl + left arrow
+#bindkey ^[[1;5C next # ctrl + right arrow
+#
+##terminfo and termcap for nice 256 color terminal
+## allow bold colors - necessary for some reason
+#attrcolor b ".I"
+#
+## tell screen how to set colors. AB = background, AF=foreground
+#termcapinfo xterm "Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm"
+#termcapinfo xterm-color "Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm"
+## erase background with current bg color
+#defbce "on"
+
+#caption always "%0=%{+b rk}%H %{bk}| %0L=%{mk}%>%-Lw%{= BW}%n%f* %t%{-}%+Lw%L>%?(%u)%? %{bk}|%>%=%{Yk} %=%C%a %Y.%m.%d %{bk}%100="
+caption always "%0=%{+b rk}%H %{bk}| %0L=%{mk}%>%-Lw%{= BW}%n%f* %t%{-}%+Lw%L>%?(%u)%? %{bk}|%>%=%{Yk} %=%Y.%m.%d %{bk}%100="
+hardstatus on
+hardstatus alwayslastline "%0=%{kB}| %{kw}%h %{kB}|%=%{kR}Load: %l%100="
+# ctrl+left or right arrow buttons
+#bindkey ^[[1;5D prev
+#bindkey ^[[1;5C next
+# alt+left or right arrow buttons
+bindkey ^[[1;3D prev
+bindkey ^[[1;3C next
+
+#terminfo and termcap for nice 256 color terminal
+# allow bold colors - necessary for some reason
+#attrcolor b ".I"
+
+# tell screen how to set colors. AB = background, AF=foreground
+#termcapinfo xterm "Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm"
+#termcapinfo xterm-color "Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm"
+# erase background with current bg color
+#defbce "on"
+
+# terminfo and termcap for nice 256 color terminal
+# allow bold colors - necessary for some reason
+attrcolor b ".I"
+# tell screen how to set colors. AB = background, AF=foreground
+# the first two are for other terminal emulators, just in case.
+termcapinfo xterm "Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm"
+termcapinfo xterm-color "Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm"
+termcapinfo xterm-256color "Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm"
+term xterm-256color
+# erase background with current bg color
+defbce "on"
