@@ -8,7 +8,7 @@ else
     alias ls='ls --color=auto'
 fi
 
-alias grep='grep -irHn --color=always'
+alias grep='grep -iHn --color=always'
 alias less='less -iSFX'
 alias vi='vim'
 
