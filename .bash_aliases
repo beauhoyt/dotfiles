@@ -16,3 +16,6 @@ alias vi='vim'
 alias svncolor='python ~/bin/svn-color.py'
 alias svnc='python ~/bin/svn-color.py'
 alias csvn='python ~/bin/svn-color.py'
+
+# helps which know about aliases
+alias which='alias | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde'
