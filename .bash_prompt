@@ -15,8 +15,7 @@ function find_git_branch() {
         git_branch=""
     fi
 
-    export PS1="\[$txtwht[$txtred\t$txtwht][$bldylw\u$txtwht][$bldylw\w$txtwht]$bldgrn${git_branch}$txtwht\]\$$txtrst "
+    export PS1="${txtwht}[${txtred}\t${txtwht}][${bldylw}\u${txtwht}][${bldylw}\w${txtwht}]${bldgrn}${git_branch}${txtwht}\$${txtrst} "
 }
 find_git_branch
 PROMPT_COMMAND=find_git_branch
-
