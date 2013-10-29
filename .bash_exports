@@ -5,6 +5,12 @@ then
     export TERM="xterm-256color"
 fi
 
+# Mac Homebrew
+if [ $osType == "Darwin" ]
+then
+    export PATH="/usr/local/bin:$PATH"
+fi
+
 # MacVim
 if [ -d "/Applications" ]
 then
