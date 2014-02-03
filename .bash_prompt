@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/colors.sh
+source ~/bin/colors.sh
 
 # Taken from: https://github.com/jimeh/git-aware-prompt
 function build_extra_prompt() {
