@@ -145,6 +145,9 @@ set laststatus=2
 let g:ctrlp_max_height = 30
 set wildignore+=*.pyc
 
+" Map <F8> to toggle the Tagbar window
+nmap <F8> :TagbarToggle<CR>
+
 " ============================================================================
 " Python IDE Setup
 " ============================================================================
