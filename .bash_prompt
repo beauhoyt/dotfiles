@@ -29,7 +29,9 @@ function build_extra_prompt() {
 
     local prompt
     prompt="${txtwht}[${txtred}\t${txtwht}]"
-    prompt="${prompt}[${bldylw}\u${txtwht}][${bldylw}\w${txtwht}]"
+#    prompt="${prompt}[${bldylw}\u${txtwht}][${bldylw}\w${txtwht}]"
+    prompt="${prompt}[${bldylw}\u${txtwht}@${bldpur}\h${txtwht}]"
+    prompt="${prompt}[${bldylw}\W${txtwht}]"
     prompt="${prompt}${extra_prompt}${txtwht}\$${txtrst} "
 
     export PS1="${prompt}"
