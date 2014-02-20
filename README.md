@@ -1,6 +1,12 @@
 # Vim Plugins & Requirements
 
-Everything requires Pathogen vim plugin.
+NOTE: **Everything requires Pathogen vim plugin.**
+
+Don't forget to run:
+* `git submodule init`
+* `git submodule update --recursive`
+
+---
 
 1. YouCompleteMe
 
