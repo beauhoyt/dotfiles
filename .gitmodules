@@ -1,0 +1,126 @@
+[submodule "/Users/beau/.vim/bundle/DoxygenToolkit.vim"]
+	path = /Users/beau/.vim/bundle/DoxygenToolkit.vim
+	url = git@github.com:vim-scripts/DoxygenToolkit.vim.git
+[submodule "/Users/beau/.vim/bundle/YouCompleteMe"]
+	path = /Users/beau/.vim/bundle/YouCompleteMe
+	url = git@github.com:Valloric/YouCompleteMe.git
+[submodule "/Users/beau/.vim/bundle/ctrlp.vim"]
+	path = /Users/beau/.vim/bundle/ctrlp.vim
+	url = git@github.com:kien/ctrlp.vim.git
+[submodule "/Users/beau/.vim/bundle/emmet-vim"]
+	path = /Users/beau/.vim/bundle/emmet-vim
+	url = git@github.com:mattn/emmet-vim.git
+[submodule "/Users/beau/.vim/bundle/jedi-vim"]
+	path = /Users/beau/.vim/bundle/jedi-vim
+	url = git@github.com:davidhalter/jedi-vim.git
+[submodule "/Users/beau/.vim/bundle/nerdcommenter"]
+	path = /Users/beau/.vim/bundle/nerdcommenter
+	url = git@github.com:scrooloose/nerdcommenter.git
+[submodule "/Users/beau/.vim/bundle/nerdtree"]
+	path = /Users/beau/.vim/bundle/nerdtree
+	url = git@github.com:scrooloose/nerdtree.git
+[submodule "/Users/beau/.vim/bundle/numbers.vim"]
+	path = /Users/beau/.vim/bundle/numbers.vim
+	url = git@github.com:myusuf3/numbers.vim.git
+[submodule "/Users/beau/.vim/bundle/python-mode"]
+	path = /Users/beau/.vim/bundle/python-mode
+	url = git@github.com:klen/python-mode
+[submodule "/Users/beau/.vim/bundle/syntastic"]
+	path = /Users/beau/.vim/bundle/syntastic
+	url = git@github.com:scrooloose/syntastic.git
+[submodule "/Users/beau/.vim/bundle/tabular"]
+	path = /Users/beau/.vim/bundle/tabular
+	url = git@github.com:godlygeek/tabular.git
+[submodule "/Users/beau/.vim/bundle/tagbar"]
+	path = /Users/beau/.vim/bundle/tagbar
+	url = git@github.com:majutsushi/tagbar
+[submodule "/Users/beau/.vim/bundle/tlib_vim"]
+	path = /Users/beau/.vim/bundle/tlib_vim
+	url = git@github.com:tomtom/tlib_vim.git
+[submodule "/Users/beau/.vim/bundle/vim-addon-mw-utils"]
+	path = /Users/beau/.vim/bundle/vim-addon-mw-utils
+	url = git@github.com:MarcWeber/vim-addon-mw-utils.git
+[submodule "/Users/beau/.vim/bundle/vim-five"]
+	path = /Users/beau/.vim/bundle/vim-five
+	url = git@github.com:tpope/vim-fugitive.git
+[submodule "/Users/beau/.vim/bundle/vim-javascript"]
+	path = /Users/beau/.vim/bundle/vim-javascript
+	url = git@github.com:pangloss/vim-javascript.git
+[submodule "/Users/beau/.vim/bundle/vim-less"]
+	path = /Users/beau/.vim/bundle/vim-less
+	url = git@github.com:groenewege/vim-less
+[submodule "/Users/beau/.vim/bundle/vim-multiple-cursors"]
+	path = /Users/beau/.vim/bundle/vim-multiple-cursors
+	url = git@github.com:terryma/vim-multiple-cursors.git
+[submodule "/Users/beau/.vim/bundle/vim-powerline"]
+	path = /Users/beau/.vim/bundle/vim-powerline
+	url = git@github.com:Lokaltog/vim-powerline.git
+[submodule "/Users/beau/.vim/bundle/vim-puppet"]
+	path = /Users/beau/.vim/bundle/vim-puppet
+	url = git@github.com:rodjek/vim-puppet.git
+[submodule "/Users/beau/.vim/bundle/vim-snipmate"]
+	path = /Users/beau/.vim/bundle/vim-snipmate
+	url = git@github.com:garbas/vim-snipmate.git
+[submodule ".vim/bundle/DoxygenToolkit.vim"]
+	path = .vim/bundle/DoxygenToolkit.vim
+	url = git@github.com:vim-scripts/DoxygenToolkit.vim.git
+[submodule ".vim/bundle/YouCompleteMe"]
+	path = .vim/bundle/YouCompleteMe
+	url = git@github.com:Valloric/YouCompleteMe.git
+[submodule ".vim/bundle/ctrlp.vim"]
+	path = .vim/bundle/ctrlp.vim
+	url = git@github.com:kien/ctrlp.vim.git
+[submodule ".vim/bundle/emmet-vim"]
+	path = .vim/bundle/emmet-vim
+	url = git@github.com:mattn/emmet-vim.git
+[submodule ".vim/bundle/jedi-vim"]
+	path = .vim/bundle/jedi-vim
+	url = git@github.com:davidhalter/jedi-vim.git
+[submodule ".vim/bundle/nerdcommenter"]
+	path = .vim/bundle/nerdcommenter
+	url = git@github.com:scrooloose/nerdcommenter.git
+[submodule ".vim/bundle/nerdtree"]
+	path = .vim/bundle/nerdtree
+	url = git@github.com:scrooloose/nerdtree.git
+[submodule ".vim/bundle/numbers.vim"]
+	path = .vim/bundle/numbers.vim
+	url = git@github.com:myusuf3/numbers.vim.git
+[submodule ".vim/bundle/python-mode"]
+	path = .vim/bundle/python-mode
+	url = git@github.com:klen/python-mode
+[submodule ".vim/bundle/syntastic"]
+	path = .vim/bundle/syntastic
+	url = git@github.com:scrooloose/syntastic.git
+[submodule ".vim/bundle/tabular"]
+	path = .vim/bundle/tabular
+	url = git@github.com:godlygeek/tabular.git
+[submodule ".vim/bundle/tagbar"]
+	path = .vim/bundle/tagbar
+	url = git@github.com:majutsushi/tagbar
+[submodule ".vim/bundle/tlib_vim"]
+	path = .vim/bundle/tlib_vim
+	url = git@github.com:tomtom/tlib_vim.git
+[submodule ".vim/bundle/vim-addon-mw-utils"]
+	path = .vim/bundle/vim-addon-mw-utils
+	url = git@github.com:MarcWeber/vim-addon-mw-utils.git
+[submodule ".vim/bundle/vim-five"]
+	path = .vim/bundle/vim-five
+	url = git@github.com:tpope/vim-fugitive.git
+[submodule ".vim/bundle/vim-javascript"]
+	path = .vim/bundle/vim-javascript
+	url = git@github.com:pangloss/vim-javascript.git
+[submodule ".vim/bundle/vim-less"]
+	path = .vim/bundle/vim-less
+	url = git@github.com:groenewege/vim-less
+[submodule ".vim/bundle/vim-multiple-cursors"]
+	path = .vim/bundle/vim-multiple-cursors
+	url = git@github.com:terryma/vim-multiple-cursors.git
+[submodule ".vim/bundle/vim-powerline"]
+	path = .vim/bundle/vim-powerline
+	url = git@github.com:Lokaltog/vim-powerline.git
+[submodule ".vim/bundle/vim-puppet"]
+	path = .vim/bundle/vim-puppet
+	url = git@github.com:rodjek/vim-puppet.git
+[submodule ".vim/bundle/vim-snipmate"]
+	path = .vim/bundle/vim-snipmate
+	url = git@github.com:garbas/vim-snipmate.git
