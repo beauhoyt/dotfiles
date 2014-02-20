@@ -10,7 +10,13 @@ Everything requires Pathogen vim plugin.
 
       2. http://www.tylercipriani.com/2013/02/24/install-vim-from-source.html
 
-   B. Run Install `cd ~/.vim/bundle/YouCompleteMe && . install.sh --clang-completer`
+   B. Run Install
+   
+      1. `cd ~/.vim/bundle/YouCompleteMe` 
+      
+      2. Might need to run `git submodule update --init --recursive`
+      
+      3. `./install.sh --clang-completer`
  
    C. More info at: http://valloric.github.io/YouCompleteMe/
 
