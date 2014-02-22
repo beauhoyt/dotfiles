@@ -3,8 +3,7 @@
 NOTE: **Everything requires Pathogen vim plugin.**
 
 Don't forget to run:
-* `git submodule init`
-* `git submodule update --recursive`
+* `git submodule update --init --recursive`
 
 ---
 
