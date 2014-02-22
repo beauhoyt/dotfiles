@@ -22,6 +22,22 @@ Don't forget to run:
       2. Might need to run `git submodule update --init --recursive`
       
       3. `./install.sh --clang-completer`
+      
+         a. Requires: cmake 2.8.x+
+         
+         b. Check version: `cmake --version`
+         
+         c. http://www.cmake.org/cmake/resources/software.html
+         
+         d. `tar -xzvf cmake-2.8.x.x.tar.gz`
+         
+         e. `cd cmake-2.8.x.x`
+         
+         f. `./configure`
+         
+         g. `gmake`
+         
+         h. `sudo gmake install`
  
    C. More info at: http://valloric.github.io/YouCompleteMe/
 
