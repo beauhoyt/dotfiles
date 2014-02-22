@@ -27,7 +27,7 @@ Don't forget to run:
          
          b. Check version: `cmake --version`
          
-         c. http://www.cmake.org/cmake/resources/software.html
+         c. CentOS yum repo doesn't have latest version so you have to get it from their website here: http://www.cmake.org/cmake/resources/software.html
          
          d. `tar -xzvf cmake-2.8.x.x.tar.gz`
          
@@ -49,7 +49,13 @@ Don't forget to run:
 
    A. Vim 7.0+
  
-   B. Exuberant ctags 5.5
+   B. Exuberant ctags 5.5+
       
       1. http://ctags.sourceforge.net/
+      
+         a. Check version: `cmake --version`
+         
+         b. Check version in yum repo: `yum info ctags`
+         
+         c. Install: `sudo yum install -y ctags`
  
