@@ -16,9 +16,8 @@ Installing dotfiles.
 
 # Setting Up Vim
 
-NOTE: **Everything requires Pathogen vim plugin.**
 
----
+*NOTE:* **Everything requires Pathogen vim plugin.**
 
 1. YouCompleteMe
 
