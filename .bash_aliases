@@ -9,6 +9,14 @@ then
         alias dhcp-start='sudo /bin/launchctl load -w /System/Library/LaunchDaemons/bootps.plist'
         alias dhcp-stop='sudo /bin/launchctl unload -w /System/Library/LaunchDaemons/bootps.plist'
     fi
+elif [ ${osType} == "SunOS" ]
+then
+    lsLocation='/opt/csw/gnu/ls'
+    # Only add alias for GNU ls on Solaris systems
+    if [ -f ${lsLocation} ]
+    then
+        alias ls="${lsLocation} --color=auto"
+    fi
 else
     alias ls='ls --color=auto'
 fi
