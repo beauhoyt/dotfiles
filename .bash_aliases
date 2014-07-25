@@ -4,6 +4,11 @@ osType=`uname`
 if [ $osType == "Darwin" -o $osType == "FreeBSD" ]
 then
     alias ls='ls -G'
+    if [ $osType == "Darwin" ]
+    then
+        alias dhcp-start='sudo /bin/launchctl load -w /System/Library/LaunchDaemons/bootps.plist'
+        alias dhcp-stop='sudo /bin/launchctl unload -w /System/Library/LaunchDaemons/bootps.plist'
+    fi
 else
     alias ls='ls --color=auto'
 fi
