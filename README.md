@@ -56,6 +56,7 @@ Installing dotfiles.
          g. `gmake`
          
          h. `sudo gmake install`
+      4. Requires `python-devel` or `python-dev` package to run `./install`
  
    C. More info at: http://valloric.github.io/YouCompleteMe/
 
