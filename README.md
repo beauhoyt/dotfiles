@@ -26,8 +26,14 @@ Installing dotfiles.
       1. Install for centos: http://sudoers-d.com/blog/2013/01/18/installing-vim-on-centos-6-dot-3/
 
       2. Compile from source: http://www.tylercipriani.com/2013/02/24/install-vim-from-source.html
+
+      3. RPMS: http://download.opensuse.org/repositories/home:/cathay4t:/misc-rhel6/CentOS_CentOS-6/x86_64/
+
+         a. `vim-common-7.4.417-3.2.x86_64.rpm`
+
+         b. `vim-enhanced-7.4.417-3.2.x86_64.rpm`
       
-      3. Debian (Ubuntu):
+      4. Debian (Ubuntu):
       
          a. Check version in aptitude: `apt-cache showpkg vim | grep -A1 Versions`
          
@@ -56,8 +62,12 @@ Installing dotfiles.
          g. `gmake`
          
          h. `sudo gmake install`
+
       4. Requires `python-devel` or `python-dev` package to run `./install`
- 
+
+      5. Requires `sudo yum groupinstall 'Development Tools'` or `sudo apt-get
+         install build-essential`
+
    C. More info at: http://valloric.github.io/YouCompleteMe/
 
 2. Numbers.vim
