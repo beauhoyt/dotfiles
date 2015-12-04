@@ -1,28 +1,45 @@
 #!/bin/bash
 
-osType=`uname`
+osType=$(uname)
+# FreeBSD / Darwin / OSX
 if [ $osType == "Darwin" -o $osType == "FreeBSD" ]
 then
+    # LS color
     alias ls='ls -G'
+
     if [ $osType == "Darwin" ]
     then
+        # Helps with reloading DHCP on OSX
         alias dhcp-start='sudo /bin/launchctl load -w /System/Library/LaunchDaemons/bootps.plist'
         alias dhcp-stop='sudo /bin/launchctl unload -w /System/Library/LaunchDaemons/bootps.plist'
+
+        # OSX version of which doesn't support as many options as Linux
+        alias which='/usr/bin/which -a'
     fi
+# Solaris
 elif [ ${osType} == "SunOS" ]
 then
     lsLocation='/opt/csw/gnu/ls'
     # Only add alias for GNU ls on Solaris systems
     if [ -f ${lsLocation} ]
     then
+        # LS color
         alias ls="${lsLocation} --color=auto"
     fi
+# Linux
 else
+    # LS color
     alias ls='ls --color=auto'
+
+    # helps which know about aliases
+    alias which='alias | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde'
 fi
 
+# Case-insensitive, filenames, line numbers, and color highlighting
 alias grep='grep -iHn --color=always'
+# Nicer less options
 alias less='less -iSFX'
+# Of course only vim or nvim (once its stable)
 alias vi='vim'
 
 # Color SVN shortcut
@@ -30,5 +47,3 @@ alias svncolor='python ~/bin/svn-color.py'
 alias svnc='python ~/bin/svn-color.py'
 alias csvn='python ~/bin/svn-color.py'
 
-# helps which know about aliases
-alias which='alias | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde'
