@@ -26,6 +26,10 @@ set bs=2
 " Rebhind <Leader> key
 let mapleader=','
 
+" For numbers.vim bundle mappings
+nnoremap <F3> :NumbersToggle<CR>
+nnoremap <F4> :NumbersOnOff<CR>
+
 " Bind nohl
 " Remove highlight of your last search
 " Ctrl+m to remove highlighting
