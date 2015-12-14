@@ -17,7 +17,7 @@ set clipboard=unnamed
 
 " Enable mouse
 " on OSX press ALT and click
-"" set mouse=a 
+"" set mouse=a
 
 " Enabled backspace
 " make backspace behave like normal again
@@ -64,7 +64,7 @@ map <Leader>m <esc>:tabnext<CR>
 
 " Map sort function to a key
 " s will sort normally
-" S will sort in reverse 
+" S will sort in reverse
 vnoremap <Leader>s :sort<CR>
 vnoremap <Leader>S :sort!<CR>
 
@@ -72,7 +72,7 @@ vnoremap <Leader>S :sort!<CR>
 " So you don't lose your virtural select
 " For better indentation
 vnoremap < <gv
-vnoremap > >gv 
+vnoremap > >gv
 
 " Show whitespace
 " MUST be inserted BEFORE the colorscheme command
@@ -99,11 +99,11 @@ set fo-=t  " Don't automatically wrap text when typing
 
 " Display right margin column
 " Set color of right display margin column
-set colorcolumn=80 
+set colorcolumn=80
 highlight ColorColumn ctermbg=233
 
 " Easier formatting of paragraphs
-" Q will reorder word within 80 character limit 
+" Q will reorder word within 80 character limit
 vmap Q qq
 nmap Q gqap
 
@@ -139,15 +139,26 @@ call pathogen#infect()
 " Vim powerline is a more beautiful info bar at the bottom of vim
 " cd ~/.vim/bundle
 " git clone git://github.com/Lokaltog/vim-powerline.git
+" Not used anymore - refer to vim-airline
+" set laststatus=2
+
+" Settings for vim-airline
+" Lean & mean status/tabline for vim that's light as air
+" cd ~/.vim/bundle
+" git submodule add -f git@github.com:bling/vim-airline.git
 set laststatus=2
+" Comment this out if you dont have the fonts intsalled from:
+" https://github.com/Lokaltog/powerline-fonts
+" let g:airline_powerline_fonts = 1
 
 " Settings for ctrlp
 " Control P is a full path fuzzy file, buffer, mru, tag, ... finder for Vim
 " cd ~/.vim/bundle
 " git clone https://github.com/kien/ctrlp.vim.git
 " Ctrl+p will open control P
-let g:ctrlp_max_height = 30
-set wildignore+=*.pyc
+" Not used right now
+" let g:ctrlp_max_height = 30
+" set wildignore+=*.pyc
 
 " Map <F8> to toggle the Tagbar window
 nmap <F8> :TagbarToggle<CR>
