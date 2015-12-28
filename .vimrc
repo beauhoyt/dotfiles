@@ -32,7 +32,7 @@ nnoremap <F4> :NumbersOnOff<CR>
 
 " Bind nohl
 " Remove highlight of your last search
-" Ctrl+m to remove highlighting
+" Ctrl+p to remove highlighting
 noremap <C-p> :nohl<CR>
 vnoremap <C-p> :nohl<CR>
 inoremap <C-p> :nohl<CR>
@@ -118,6 +118,9 @@ set shiftwidth=4
 set shiftround
 set expandtab
 
+" Yaml files need only two spaces to be pretty
+autocmd FileType yaml setlocal tabstop=2 softtabstop=2 shiftwidth=2 shiftround expandtab
+
 " Make search case insensitive
 set hlsearch
 set incsearch
@@ -162,6 +165,64 @@ set laststatus=2
 
 " Map <F8> to toggle the Tagbar window
 nmap <F8> :TagbarToggle<CR>
+
+" ============================================================================
+" Go IDE Setup
+" ============================================================================
+" https://github.com/fatih/vim-go
+"
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>c <Plug>(go-coverage)
+
+au FileType go nmap <Leader>ds <Plug>(go-def-split)
+au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+
+" Or open the Godoc in browser
+" au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+
+au FileType go nmap <Leader>i <Plug>(go-implements)
+
+" Show type info for the word under your cursor with <leader>i (useful if you
+" have disabled auto showing type info via g:go_auto_type_info)
+" au FileType go nmap <Leader>i <Plug>(go-info)
+
+au FileType go nmap <Leader>e <Plug>(go-rename)
+
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+
+" Enable goimports to automatically insert import paths instead of gofmt:
+" let g:go_fmt_command = "goimports"
+
+" By default vim-go shows errors for the fmt command, to disable it:
+" let g:go_fmt_fail_silently = 1
+
+" Disable auto fmt on save:
+" let g:go_fmt_autosave = 0
+
+" Disable opening browser after posting your snippet to play.golang.org:
+" let g:go_play_open_browser = 0
+
+" All commands support collecting and displaying errors in Vim's location list.
+"
+" Quickly navigate through these location lists with :lne for next error and
+" :lp for previous. You can also bind these to keys, for example:
+map <C-n> :lne<CR>
+map <C-m> :lp<CR>
+
+" Sometimes when using both vim-go and syntastic Vim will start lagging while
+" saving and opening files. The following fixes this:
+" let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+" let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 
 " ============================================================================
 " Python IDE Setup
