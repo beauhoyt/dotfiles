@@ -45,7 +45,7 @@ Installing dotfiles.
 
       2. Might need to run `git submodule update --init --recursive`
 
-      3. `./install.sh --clang-completer`
+      3. `python install.py --clang-completer`
 
          a. Requires: cmake 2.8.x+
 
@@ -100,7 +100,7 @@ Installing dotfiles.
 
    A. If submodules are detached
 
-      i. `git submodule foreach git checkout master`
+      1. `git submodule foreach git checkout master`
 
 2. If `.vim/bundle/YouCompleteMe` has changed during the update
 
@@ -108,4 +108,4 @@ Installing dotfiles.
 
    B. `git submodule update --init --recursive`
 
-   C. `python install.py` to update YouCompleteMe
+   C. `python install.py --clang-completer` to update YouCompleteMe
