@@ -1,0 +1,43 @@
+#!/bin/bash
+# Fix ssh-agent 6.9+ to work on OSX
+# So you can use ed25519 and ecdsa
+
+# File to hold existing SSH agent sesssion
+SSH_ENV="${HOME}/.ssh/environment"
+
+function start_ssh_agent {
+  echo "Initializing new SSH agent..."
+  /usr/local/bin/ssh-agent -s | sed 's/^echo/#echo/' > "${SSH_ENV}"
+  chmod 0600 "${SSH_ENV}"
+  source "${SSH_ENV}" > /dev/null
+  echo "DONE Initializing..."
+
+  echo "Adding Keys..."
+  /usr/local/bin/ssh-add
+}
+
+osType=$(uname)
+
+# Handle for only OSX (Darwin) for now. This should only be called if it's a
+# TTY; not PTS (pseudo TTY) or STY (pseudo screen TTY). Meaning it can't be a
+# SSH session; it has to be a physical login.
+#
+# TODO: Might add Linux OS type for fedora/ubuntu desktop/laptops.
+if [ -z "${SSH_TTY}" -a $osType == "Darwin" ]
+then
+
+  # Recover existing SSH agent session
+  if [ -f "${SSH_ENV}" ]
+  then
+    source "${SSH_ENV}" > /dev/null
+
+    # Restart SSH agent if it has crashed
+    ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent > /dev/null || {
+      start_ssh_agent
+    }
+
+  # Start SSH agent for the first time
+  else
+    start_ssh_agent
+  fi
+fi

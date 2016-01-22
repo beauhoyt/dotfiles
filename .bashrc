@@ -8,7 +8,7 @@ then
 fi
 
 # Include all other bash_* files
-for fileIncludes in ~/.bash_{aliases,history_config,prompt,exports,git_completion,aws_completion}
+for fileIncludes in ~/.bash_{aliases,history_config,prompt,exports,git_completion,aws_completion,ssh_agent}
 do
     if [ -r $fileIncludes ]
     then
