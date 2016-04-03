@@ -15,6 +15,12 @@ then
 
         # OSX version of which doesn't support as many options as Linux
         alias which='/usr/bin/which -a'
+
+        alias openTcpPorts='sudo lsof -i -n -P | \grep TCP'
+        alias openUdpPorts='sudo lsof -i -n -P | \grep UDP'
+        alias listenTcpPort='sudo lsof -iTCP -sTCP:LISTEN -n -P'
+        alias osxDNS='scutil --dns'
+        alias osxRoutes='netstat -nr'
     fi
 # Solaris
 elif [ ${osType} == "SunOS" ]
@@ -47,3 +53,5 @@ alias svncolor='python ~/bin/svn-color.py'
 alias svnc='python ~/bin/svn-color.py'
 alias csvn='python ~/bin/svn-color.py'
 
+# Public git repo thats kind of private via obfuscating
+alias beauhoyt_sha2='echo -n $(echo -n beauhoyt | shasum -a 256 | cut -c 1-39)'
