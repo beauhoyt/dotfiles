@@ -16,11 +16,28 @@ then
         # OSX version of which doesn't support as many options as Linux
         alias which='/usr/bin/which -a'
 
+        # OSX alias helpers similar to linux netstat tool
         alias openTcpPorts='sudo lsof -i -n -P | \grep TCP'
         alias openUdpPorts='sudo lsof -i -n -P | \grep UDP'
         alias listenTcpPort='sudo lsof -iTCP -sTCP:LISTEN -n -P'
         alias osxDNS='scutil --dns'
         alias osxRoutes='netstat -nr'
+
+        # OSX toggle Hidden files in Finder, because it's no longer an option
+        # inside Finder Preferences.
+        alias toggleHiddenFiles='case "$(/usr/bin/defaults read com.apple.finder AppleShowAllFiles)" in
+            NO)
+                /usr/bin/defaults write com.apple.finder AppleShowAllFiles YES &&
+                /bin/echo "Hidden Files Will Show In Finder"
+                ;;
+            YES)
+                /usr/bin/defaults write com.apple.finder AppleShowAllFiles NO &&
+                /bin/echo "Hidden Files Will NOT Show In Finder"
+                ;;
+            *)
+                /bin/echo "Error: invalid response: $(/usr/bin/defaults read com.apple.finder AppleShowAllFiles)"
+                ;;
+        esac'
     fi
 # Solaris
 elif [ ${osType} == "SunOS" ]
