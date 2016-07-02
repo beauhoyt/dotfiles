@@ -7,14 +7,17 @@ then
     return
 fi
 
-# Include all other bash_* files
-for fileIncludes in ~/.bash_{aliases,history_config,prompt,exports,git_completion,aws_completion,ssh_agent}
-do
-    if [ -r $fileIncludes ]
-    then
-        source $fileIncludes
+# Source in extra aliases
+for i in ~/.bash/*.sh; do
+    if [ -r "$i" ]; then
+        if [ "$PS1" ]; then
+            source "$i"
+        else
+            source "$i" >/dev/null 2>&1
+        fi
     fi
 done
+unset i
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
