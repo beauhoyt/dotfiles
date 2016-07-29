@@ -186,22 +186,28 @@ au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
 " Or open the Godoc in browser
 " au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
 
+" Show a list of interfaces which is implemented by the type under your cursor
+" with <leader>s
+" au FileType go nmap <Leader>s <Plug>(go-implements)
 au FileType go nmap <Leader>i <Plug>(go-implements)
 
 " Show type info for the word under your cursor with <leader>i (useful if you
 " have disabled auto showing type info via g:go_auto_type_info)
 " au FileType go nmap <Leader>i <Plug>(go-info)
+au FileType go nmap <Leader>I <Plug>(go-info)
 
+" Rename the identifier under the cursor to a new name
 au FileType go nmap <Leader>e <Plug>(go-rename)
 
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_types = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 
 " Enable goimports to automatically insert import paths instead of gofmt:
-" let g:go_fmt_command = "goimports"
+let g:go_fmt_command = "goimports"
 
 " By default vim-go shows errors for the fmt command, to disable it:
 " let g:go_fmt_fail_silently = 1
@@ -216,12 +222,12 @@ let g:go_highlight_build_constraints = 1
 "
 " Quickly navigate through these location lists with :lne for next error and
 " :lp for previous. You can also bind these to keys, for example:
-map <C-n> :lne<CR>
-map <C-m> :lp<CR>
+" map <C-n> :lne<CR>
+" map <C-m> :lp<CR>
 
 " Sometimes when using both vim-go and syntastic Vim will start lagging while
 " saving and opening files. The following fixes this:
-" let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+" let g:syntastic_go_checkers = ['golint', 'go vet', 'errcheck']
 " let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 
 " let g:tagbar_type_go = {
