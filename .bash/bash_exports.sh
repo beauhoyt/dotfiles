@@ -1,5 +1,22 @@
 #!/bin/bash
 
+# Add once to $PATH
+pathadd() {
+    if [ -d "$1" ] && ! echo $PATH | grep -E -q "(^|:)$1($|:)"
+    then
+        if [ "$2" = "after" ]
+        then
+            export PATH="${PATH}:${1%/}"
+        else
+            export PATH="${1%/}:${PATH}"
+        fi
+    fi
+}
+
+# Remove from $PATH
+pathrm() {
+    export PATH="$(echo ${PATH} | sed -e "s;\(^\|:\)${1%/}\(:\|\$\);\1\2;g" -e 's;^:\|:$;;g' -e 's;::;:;g')"
+}
 
 # Xterm support
 if [ -n "${DISPLAY}" -a "${TERM}" = "xterm" ]
@@ -11,8 +28,12 @@ then
     export TERM="xterm"
 fi
 
+# Rust lang path
+pathadd "${HOME}/.cargo/bin" "after"
+
 # GO lang path
 export GOPATH="${HOME}/go"
+pathadd "${GOPATH}/bin" "after"
 
 if [ ${osType} == "Darwin" ]
 then
@@ -28,9 +49,9 @@ then
         export VIM_APP_DIR="/Applications"
     fi
 
-    export PATH="${PATH}:${GOPATH}/bin:/usr/local/opt/go/libexec/bin"
+    pathadd "/usr/local/opt/go/libexec/bin" "after"
 else
-    export PATH="${PATH}:${GOPATH}/bin:/usr/local/go/bin"
+    pathadd "/usr/local/go/bin" "after"
 fi
 
 # LS colors
