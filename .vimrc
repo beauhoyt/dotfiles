@@ -17,7 +17,7 @@ set clipboard=unnamed
 
 " Enable mouse
 " on OSX press ALT and click
-"" set mouse=a
+" set mouse=a
 
 " Enabled backspace
 " make backspace behave like normal again
@@ -33,21 +33,23 @@ nnoremap <F4> :NumbersOnOff<CR>
 " Bind nohl
 " Remove highlight of your last search
 " Ctrl+p to remove highlighting
-noremap <C-p> :nohl<CR>
-vnoremap <C-p> :nohl<CR>
-inoremap <C-p> :nohl<CR>
+" noremap <C-p> :nohl<CR>
+" vnoremap <C-p> :nohl<CR>
+" inoremap <C-p> :nohl<CR>
 
 " Quicksave command
 " Ctrl+Z to save
-noremap <C-Z> :update<CR>
-vnoremap <C-Z> <C-C>:update<CR>
-inoremap <C-Z> <C-O>:update<CR>
+" TODO: Might remove this later. Since I don't use it anymore
+" noremap <C-Z> :update<CR>
+" vnoremap <C-Z> <C-C>:update<CR>
+" inoremap <C-Z> <C-O>:update<CR>
 
 " Quick quit command
 " ,+e will close out buffer
 " ,+E will quit all files opened
-noremap <Leader>e :quit<CR>
-noremap <Leader>E :qa!<CR>
+" TODO: Might remove this later. Since I don't use it anymore
+" noremap <Leader>e :quit<CR>
+" noremap <Leader>E :qa!<CR>
 
 " Bind Ctrl + <movement> keys to move around the windows, instead of using
 " Ctrl+W + <movement>
@@ -119,7 +121,7 @@ set shiftround
 set expandtab
 
 " Yaml files need only two spaces to be pretty
-autocmd FileType yaml setlocal tabstop=2 softtabstop=2 shiftwidth=2 shiftround expandtab
+" autocmd FileType yaml setlocal tabstop=2 softtabstop=2 shiftwidth=2 shiftround expandtab
 
 " Make search case insensitive
 set hlsearch
@@ -194,7 +196,8 @@ au FileType go nmap <Leader>i <Plug>(go-implements)
 " Show type info for the word under your cursor with <leader>i (useful if you
 " have disabled auto showing type info via g:go_auto_type_info)
 " au FileType go nmap <Leader>i <Plug>(go-info)
-au FileType go nmap <Leader>I <Plug>(go-info)
+" au FileType go nmap <Leader>I <Plug>(go-info)
+let g:go_auto_type_info = 1
 
 " Rename the identifier under the cursor to a new name
 au FileType go nmap <Leader>e <Plug>(go-rename)
@@ -224,39 +227,26 @@ let g:go_fmt_command = "goimports"
 " :lp for previous. You can also bind these to keys, for example:
 " map <C-n> :lne<CR>
 " map <C-m> :lp<CR>
+map <C-m> :cnext<CR>
+map <C-p> :cprevious<CR>
+nnoremap <leader>a :cclose<CR>
+
+let g:go_list_type = "quickfix"
 
 " Sometimes when using both vim-go and syntastic Vim will start lagging while
 " saving and opening files. The following fixes this:
 " let g:syntastic_go_checkers = ['golint', 'go vet', 'errcheck']
 " let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+let g:go_metalinter_autosave = 1
+let g:go_metalinter_autosave_enabled = ['vet', 'golint']
 
-" let g:tagbar_type_go = {
-"     \ 'ctagstype' : 'go',
-"     \ 'kinds'     : [
-"         \ 'p:package',
-"         \ 'i:imports:1',
-"         \ 'c:constants',
-"         \ 'v:variables',
-"         \ 't:types',
-"         \ 'n:interfaces',
-"         \ 'w:fields',
-"         \ 'e:embedded',
-"         \ 'm:methods',
-"         \ 'r:constructor',
-"         \ 'f:functions'
-"     \ ],
-"     \ 'sro' : '.',
-"     \ 'kind2scope' : {
-"         \ 't' : 'ctype',
-"         \ 'n' : 'ntype'
-"     \ },
-"     \ 'scope2kind' : {
-"         \ 'ctype' : 't',
-"         \ 'ntype' : 'n'
-"     \ },
-"     \ 'ctagsbin'  : 'gotags',
-"     \ 'ctagsargs' : '-sort -silent'
-" \ }
+" ============================================================================
+" Rust IDE Setup
+" ============================================================================
+set hidden
+let g:racer_cmd = "/Users/beau/.cargo/bin/racer"
+let $RUST_SRC_PATH="/usr/local/src/rustc-1.10.0/src/"
 
 " ============================================================================
 " Python IDE Setup
@@ -265,7 +255,8 @@ let g:go_fmt_command = "goimports"
 " Settings for python-mode
 " cd ~/.vim/bundle
 " git clone https://github.com/klen/python-mode
-map <Leader>g :call RopeGotoDefinition()<CR>
+" FIXME: Clashes with vim-go
+" map <Leader>g :call RopeGotoDefinition()<CR>
 let ropevim_enable_shortcuts = 1
 let g:pymode_rope_goto_def_newwin = "vnew"
 let g:pymode_rope_extended_complete = 1
@@ -273,26 +264,7 @@ let g:pymode_breakpoint = 0
 let g:pymode_syntax = 1
 let g:pymode_syntax_builtin_objs = 0
 let g:pymode_syntax_builtin_funcs = 0
-map <Leader>b Oimport ipdb; ipdb.set_trace() # BREAKPOINT<C-c>
-
-" Better navigating through omnicomplete option list
-" See http://stackoverflow.com/questions/2170023/how-to-map-keys-for-popup-menu-in-vim
-" j will map to ctrl+N
-" k will map to ctrl+P
-" set completeopt=longest,menuone
-" function! OmniPopup(action)
-"     if pumvisible()
-"         if a:action == 'j'
-"             return "\<C-N>"
-"         elseif a:action == 'k'
-"             return "\<C-P>"
-"         endif
-"     endif
-"     return a:action
-" endfunction
-"
-" inoremap <silent><C-j> <C-R>=OmniPopup('j')<CR>
-" inoremap <silent><C-k> <C-R>=OmniPopup('k')<CR>
+" map <Leader>b Oimport ipdb; ipdb.set_trace() # BREAKPOINT<C-c>
 
 " Python folding
 " mkdir -p ~/.vim/ftplugin
