@@ -23,6 +23,9 @@ then
         alias osxDNS='scutil --dns'
         alias osxRoutes='netstat -nr'
 
+        # OSX helper for updating Builder mount
+        alias updateBuilderMnt='for folder in $(ls -d /Volumes/Builder/*); do svn up $folder; done'
+
         # OSX toggle Hidden files in Finder, because it's no longer an option
         # inside Finder Preferences.
         alias toggleHiddenFiles='case "$(/usr/bin/defaults read com.apple.finder AppleShowAllFiles)" in
