@@ -46,6 +46,17 @@ then
       start_ssh_agent
     }
 
+    # Check if SSH Agent started up correctly and is useable
+    ssh-add -L > /dev/null 2>&1
+    if [ "$(echo $?)" != "0" ]
+    then
+      echo "Looks start_ssh_agent failed to correctly startup"
+      echo "Cleaning up all ssh-agent. Please type SUDO Passwd:"
+      sudo killall ssh-agent
+      echo "DONE Kill all ssh-agents"
+      start_ssh_agent
+    fi
+
   # Start SSH agent for the first time
   else
     start_ssh_agent

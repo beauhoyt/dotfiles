@@ -24,12 +24,22 @@ unset i
 # sources /etc/bash.bashrc).
 if [ `uname` = 'Darwin' ]; then
     if [ -f `brew --prefix`/etc/bash_completion ]; then
-        . `brew --prefix`/etc/bash_completion
+        source `brew --prefix`/etc/bash_completion
     fi
 else
     if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
-        . /etc/bash_completion
+        source /etc/bash_completion
     fi
+fi
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f ${HOME}/google-cloud-sdk/path.bash.inc ]; then
+  source ${HOME}/google-cloud-sdk/path.bash.inc
+fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f ${HOME}/google-cloud-sdk/completion.bash.inc ]; then
+  source ${HOME}/google-cloud-sdk/completion.bash.inc
 fi
 
 # check the window size after each command and, if necessary,
