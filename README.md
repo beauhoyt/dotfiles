@@ -102,10 +102,3 @@ Installing dotfiles.
 
       1. `git submodule foreach git checkout master`
 
-2. If `.vim/bundle/YouCompleteMe` has changed during the update
-
-   A. `cd ~/.vim/bundle/YouCompleteMe`
-
-   B. `git submodule update --init --recursive`
-
-   C. `python install.py --clang-completer` to update YouCompleteMe
