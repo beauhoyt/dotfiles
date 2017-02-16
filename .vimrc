@@ -168,6 +168,10 @@ set laststatus=2
 " Map <F8> to toggle the Tagbar window
 nmap <F8> :TagbarToggle<CR>
 
+" NeoComplete
+" https://github.com/Shougo/neocomplete.vim
+let g:neocomplete#enable_at_startup = 1
+
 " ============================================================================
 " Go IDE Setup
 " ============================================================================
@@ -246,7 +250,7 @@ let g:go_metalinter_autosave_enabled = ['vet', 'golint']
 " ============================================================================
 set hidden
 let g:racer_cmd = "/Users/beau/.cargo/bin/racer"
-let $RUST_SRC_PATH="/usr/local/src/rustc-1.10.0/src/"
+let $RUST_SRC_PATH="/usr/local/src/rustc-1.15.1/src/"
 
 " ============================================================================
 " Python IDE Setup
