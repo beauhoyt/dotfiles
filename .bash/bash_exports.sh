@@ -57,12 +57,18 @@ fi
 # Setup PyENV
 if which pyenv > /dev/null
 then
-    eval "$(pyenv init -)"
+    if [ -z "$(echo $PATH | grep '\.pyenv')" ]
+    then
+        eval "$(pyenv init -)"
+    fi
 fi
 # Setup PyENV plugin VirtualENV
 if which pyenv-virtualenv-init > /dev/null
 then
-    eval "$(pyenv virtualenv-init -)"
+    if [ -z "$(echo $PATH | grep 'pyenv-virtualenv')" ]
+    then
+        eval "$(pyenv virtualenv-init -)"
+    fi
 fi
 
 # LS colors

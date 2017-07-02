@@ -168,9 +168,39 @@ set laststatus=2
 " Map <F8> to toggle the Tagbar window
 nmap <F8> :TagbarToggle<CR>
 
-" NeoComplete
-" https://github.com/Shougo/neocomplete.vim
-let g:neocomplete#enable_at_startup = 1
+if has('nvim')
+
+" Required:
+set runtimepath+=~/.vim/bundles/repos/github.com/Shougo/dein.vim
+
+" Required:
+if dein#load_state('~/.vim/bundles')
+  call dein#begin('~/.vim/bundles')
+
+  " Let dein manage dein
+  " Required:
+  call dein#add('~/.vim/bundles/repos/github.com/Shougo/dein.vim')
+
+  " Add or remove your plugins here:
+  " call dein#add('Shougo/neosnippet.vim')
+  " call dein#add('Shougo/neosnippet-snippets')
+  call dein#add('Shougo/deoplete.nvim')
+
+  " You can specify revision/branch/tag.
+  " call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
+
+  " Required:
+  call dein#end()
+  call dein#save_state()
+endif
+
+else
+
+    " NeoComplete
+    " https://github.com/Shougo/neocomplete.vim
+    let g:neocomplete#enable_at_startup = 1
+
+endif
 
 " ============================================================================
 " Go IDE Setup
@@ -250,11 +280,16 @@ let g:go_metalinter_autosave_enabled = ['vet', 'golint']
 " ============================================================================
 set hidden
 let g:racer_cmd = "/Users/beau/.cargo/bin/racer"
-let $RUST_SRC_PATH="/usr/local/src/rustc-1.15.1/src/"
+"let $RUST_SRC_PATH="/usr/local/src/rustc-1.15.1/src/"
+let $RUST_SRC_PATH="/usr/local/Cellar/rust/1.18.0_1/share/rust/rust_src/"
 
 " ============================================================================
 " Python IDE Setup
 " ============================================================================
+if has('nvim')
+    let g:python_host_prog = "~/.pyenv/versions/2.7.13/envs/neovim/bin/python"
+    let g:python3_host_prog = "~/.pyenv/versions/3.6.1/envs/neovim3/bin/python3"
+endif
 
 " Settings for python-mode
 " cd ~/.vim/bundle

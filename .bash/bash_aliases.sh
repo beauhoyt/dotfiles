@@ -73,5 +73,7 @@ alias svncolor='python ~/bin/svn-color.py'
 alias svnc='python ~/bin/svn-color.py'
 alias csvn='python ~/bin/svn-color.py'
 
+alias ptree='tree --prune'
+
 # Public git repo thats kind of private via obfuscating
 alias beauhoyt_sha2='echo -n $(echo -n beauhoyt | shasum -a 256 | cut -c 1-39)'
