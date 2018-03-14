@@ -16,6 +16,9 @@ then
         # OSX version of which doesn't support as many options as Linux
         alias which='/usr/bin/which -a'
 
+        # OSX version of ncal
+        alias cal='ncal -wy'
+
         # OSX alias helpers similar to linux netstat tool
         alias openTcpPorts='sudo lsof -i -n -P | \grep TCP'
         alias openUdpPorts='sudo lsof -i -n -P | \grep UDP'
