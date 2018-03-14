@@ -134,6 +134,11 @@ set nobackup
 set nowritebackup
 set noswapfile
 
+" Jinja2
+" https://github.com/lepture/vim-jinja
+"
+au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm,*.cnf.j2,*.j2 set ft=jinja
+
 " Setup Pathogen to manage plugins
 " mkdir -p ~/.vim/autoload ~/.vim/bundle
 " curl -so ~/.vim/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/HEAD/autoload/pathogen.vim
@@ -309,3 +314,4 @@ let g:pymode_syntax_builtin_funcs = 0
 " mkdir -p ~/.vim/ftplugin
 " wget -O ~/.vim/ftplugin/python_editing.vim http://www.vim.org/scripts/download_script.php?src_id=5492
 set nofoldenable
+

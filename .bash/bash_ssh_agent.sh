@@ -4,6 +4,8 @@
 
 # File to hold existing SSH agent sesssion
 SSH_ENV="${HOME}/.ssh/environment"
+SSH_TMP="/tmp/ssh-agent-$(whoami)"
+SSH_TMP_ADD="/tmp/ssh-agent-add-$(whoami)"
 
 SSH_AGENT_BIN="/usr/bin/ssh-agent"
 SSH_ADD_BIN="/usr/bin/ssh-add"
@@ -18,23 +20,19 @@ then
 fi
 
 function start_ssh_agent {
-  echo "Initializing new SSH agent..."
-  $SSH_AGENT_BIN -s | sed 's/^echo/#echo/' > "${SSH_ENV}"
-  chmod 0600 "${SSH_ENV}"
-  source "${SSH_ENV}" > /dev/null
-  echo "DONE Initializing..."
 
+  echo "Initializing new SSH agent..."
+  $SSH_AGENT_BIN -s | sed 's/^echo/#echo/' > ${SSH_ENV}
+  chmod 0600 ${SSH_ENV}
+  source ${SSH_ENV} > /dev/null
+  echo "DONE Initializing..."
+  echo ""
   echo "Adding Keys..."
-  $SSH_ADD_BIN
+  $SSH_ADD_BIN &&
+  touch $SSH_TMP_ADD
 }
 
-osType=$(uname)
-
-# Handle for only OSX (Darwin) for now. This should only be called if it's a
-# TTY; not PTS (pseudo TTY) or STY (pseudo screen TTY). Meaning it can't be a
-# SSH session; it has to be a physical login.
-if [ -z "${SSH_TTY}" ] && [ $osType == "Darwin" -o $osType == "Linux" ]
-then
+function start_or_recover {
 
   # Recover existing SSH agent session
   if [ -f "${SSH_ENV}" ]
@@ -61,4 +59,33 @@ then
   else
     start_ssh_agent
   fi
+}
+
+osType=$(uname)
+
+# Handle for only OSX (Darwin) for now. This should only be called if it's a
+# TTY; not PTS (pseudo TTY) or STY (pseudo screen TTY). Meaning it can't be a
+# SSH session; it has to be a physical login.
+if [ -z "${SSH_TTY}" ] && [ $osType == "Darwin" -o $osType == "Linux" ]
+then
+
+  # Create SSH_TMP lock
+  if ( set -o noclobber; test ! -e ${SSH_TMP} && echo $$ > ${SSH_TMP} ) 2> /dev/null
+  then
+
+      start_or_recover
+
+  else
+
+    # Wait for SSH keys to be added
+    echo "Waiting for ${SSH_TMP_ADD} to be created..."
+    while [ ! -e ${SSH_TMP_ADD} ]
+    do
+      sleep 5
+    done
+
+    echo "${SSH_TMP_ADD} was touch..."
+    start_or_recover
+  fi
+
 fi
