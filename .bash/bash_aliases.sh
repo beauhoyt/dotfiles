@@ -83,3 +83,4 @@ alias ltree='tree -L 2'
 alias beauhoyt_sha2='echo -n $(echo -n beauhoyt | shasum -a 256 | cut -c 1-39)'
 
 alias gobo='cd ~/go/src/github.com/beauhoyt'
+alias bogo='cd ~/go/src/github.com/beauhoyt'
