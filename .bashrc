@@ -26,6 +26,11 @@ if [ `uname` = 'Darwin' ]; then
     if [ -f `brew --prefix`/etc/bash_completion ]; then
         source `brew --prefix`/etc/bash_completion
     fi
+    if [ -d `brew --prefix`/etc/bash_completion.d ]; then
+        for i in $(ls -1 `brew --prefix`/etc/bash_completion.d); do
+            source `brew --prefix`/etc/bash_completion.d/${i}
+        done
+    fi
 else
     if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
         source /etc/bash_completion

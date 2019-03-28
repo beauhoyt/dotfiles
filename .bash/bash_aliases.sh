@@ -84,3 +84,6 @@ alias beauhoyt_sha2='echo -n $(echo -n beauhoyt | shasum -a 256 | cut -c 1-39)'
 
 alias gobo='cd ~/go/src/github.com/beauhoyt'
 alias bogo='cd ~/go/src/github.com/beauhoyt'
+
+# Shelling into old Cisco Switches with the correct kex algorithm and cypher
+alias sshOldSwitch='ssh -oKexAlgorithms=diffie-hellman-group-exchange-sha1 -c aes128-cbc -A'
