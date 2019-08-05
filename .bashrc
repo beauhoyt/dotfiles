@@ -23,13 +23,20 @@ unset i
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if [ `uname` = 'Darwin' ]; then
-    if [ -f `brew --prefix`/etc/bash_completion ]; then
-        source `brew --prefix`/etc/bash_completion
-    fi
-    if [ -d `brew --prefix`/etc/bash_completion.d ]; then
-        for i in $(ls -1 `brew --prefix`/etc/bash_completion.d); do
-            source `brew --prefix`/etc/bash_completion.d/${i}
-        done
+    # This code chuck might not be needed anymore with:
+    #  brew install bash-completion
+    # if [ -f `brew --prefix`/etc/bash_completion ]; then
+    #     source `brew --prefix`/etc/bash_completion
+    # fi
+    # if [ -d `brew --prefix`/etc/bash_completion.d ]; then
+    #     for i in $(ls -1 `brew --prefix`/etc/bash_completion.d); do
+    #         source `brew --prefix`/etc/bash_completion.d/${i}
+    #     done
+    # fi
+    # Run /usr/local/etc/profile.d/bash_completion.sh
+    if [ -r /usr/local/etc/profile.d/bash_completion.sh ]
+    then
+        source /usr/local/etc/profile.d/bash_completion.sh > /dev/null 2>&1
     fi
 else
     if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
