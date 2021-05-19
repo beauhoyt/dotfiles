@@ -75,11 +75,16 @@ then
 
       start_or_recover
 
+      # Make sure it's touched again so it doesn't get deleted too early
+      touch ${SSH_TMP_ADD}
   else
     if [ -e ${SSH_TMP_ADD} ]
     then
       # Nothing to wait for... just do it
       start_or_recover
+
+      # Make sure it's touched again so it doesn't get deleted too early
+      touch ${SSH_TMP_ADD}
     else
       # Wait for SSH keys to be added
       echo "Waiting for ${SSH_TMP_ADD} to be created..."
