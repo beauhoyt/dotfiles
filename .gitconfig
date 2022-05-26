@@ -47,3 +47,6 @@ required = true
 smudge = git-lfs smudge -- %f
 process = git-lfs filter-process
 clean = git-lfs clean -- %f
+
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
