@@ -54,6 +54,10 @@ if [ -f ${HOME}/google-cloud-sdk/completion.bash.inc ]; then
   source ${HOME}/google-cloud-sdk/completion.bash.inc
 fi
 
+if [ -f /usr/local/bin/aws_completer ]; then
+  complete -C '/usr/local/bin/aws_completer' aws
+fi
+
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
