@@ -87,3 +87,20 @@ alias bogo='cd ~/go/src/github.com/beauhoyt'
 
 # Shelling into old Cisco Switches with the correct kex algorithm and cypher
 alias sshOldSwitch='ssh -oKexAlgorithms=diffie-hellman-group-exchange-sha1 -c aes128-cbc -A'
+
+removeSshKeyForHost() {
+  echo "Removing SSH Keys for Host: $1" ; ssh-keygen -r $1 ; ssh-keygen -R $1
+}
+
+removeSshKeyForDeploy() {
+  echo "Remove SSH Keys for Host: $2 on $1 server"
+  ssh -A $1 'hostname; sudo -u deploy -i ssh-keygen -r '$2' ; sudo -u deploy -i ssh-keygen -R '$2' '
+}
+
+reloginForDeploy() {
+  echo "Re-setting up SSH Keys for Host: $2 on $1 server"
+  ssh -t -A $1 '
+    hostname ;
+    sudo -H -u deploy -i /bin/ssh -t -i .ssh/id_rsa '$2' "hostname"
+  '
+}
