@@ -72,9 +72,9 @@ alias less='less -iSFX'
 alias vi='vim'
 
 # Color SVN shortcut
-alias svncolor='python ~/bin/svn-color.py'
-alias svnc='python ~/bin/svn-color.py'
-alias csvn='python ~/bin/svn-color.py'
+alias svncolor='python3 ~/bin/svn-color.py'
+alias svnc='python3 ~/bin/svn-color.py'
+alias csvn='python3 ~/bin/svn-color.py'
 
 alias ptree='tree --prune'
 alias ltree='tree -L 2'

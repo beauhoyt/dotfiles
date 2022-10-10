@@ -27,6 +27,16 @@ function build_extra_prompt() {
         extra_prompt="${bldcyn}{${virtual_env}}${extra_prompt}"
     fi
 
+    # Pulumi
+    local pulumi_stack
+    if $(pwd -P | \grep pulumi > /dev/null 2>&1)
+    then
+       if pulumi_stack=$(pulumi stack --show-name 2> /dev/null)
+       then
+           extra_prompt="${extra_prompt}${bldpur}<${pulumi_stack}>"
+       fi
+    fi
+
     local prompt
     prompt="${txtwht}[${txtred}\t${txtwht}]"
 #    prompt="${prompt}[${bldylw}\u${txtwht}][${bldylw}\w${txtwht}]"

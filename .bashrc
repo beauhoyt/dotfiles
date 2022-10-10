@@ -49,9 +49,8 @@ if [ -f ${HOME}/google-cloud-sdk/path.bash.inc ]; then
   source ${HOME}/google-cloud-sdk/path.bash.inc
 fi
 
-# The next line enables shell command completion for gcloud.
-if [ -f ${HOME}/google-cloud-sdk/completion.bash.inc ]; then
-  source ${HOME}/google-cloud-sdk/completion.bash.inc
+if [ -f /usr/local/bin/aws_completer ]; then
+  complete -C '/usr/local/bin/aws_completer' aws
 fi
 
 if [ -f /usr/local/bin/aws_completer ]; then

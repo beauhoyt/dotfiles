@@ -3,9 +3,11 @@
 # So you can use ed25519 and ecdsa
 
 # File to hold existing SSH agent sesssion
+WHOAMI_USER="$(whoami)"
 SSH_ENV="${HOME}/.ssh/environment"
-SSH_TMP="/tmp/ssh-agent-$(whoami)"
-SSH_TMP_ADD="/tmp/ssh-agent-add-$(whoami)"
+SSH_LOCK="/tmp/ssh-agent-lock-${WHOAMI_USER}"
+SSH_TMP="/tmp/ssh-agent-${WHOAMI_USER}"
+SSH_TMP_ADD="/tmp/ssh-agent-add-${WHOAMI_USER}"
 
 SSH_AGENT_BIN="/usr/bin/ssh-agent"
 SSH_ADD_BIN="/usr/bin/ssh-add"
@@ -37,6 +39,7 @@ function start_or_recover {
   # Recover existing SSH agent session
   if [ -f "${SSH_ENV}" ]
   then
+    echo "source ${SSH_ENV}"
     source "${SSH_ENV}" > /dev/null
 
     # Restart SSH agent if it has crashed
@@ -61,41 +64,73 @@ function start_or_recover {
   fi
 }
 
+function wait_and_recover {
+  if [ -e ${SSH_TMP_ADD} ]
+  then
+    # Nothing to wait for... just do it
+    start_or_recover
+
+    # Make sure it's touched again so it doesn't get deleted too early
+    touch ${SSH_TMP_ADD}
+  else
+    # Wait for SSH keys to be added
+    echo "Waiting for ${SSH_TMP_ADD} to be created..."
+    while [ ! -e ${SSH_TMP_ADD} ]
+    do
+        sleep 5
+    done
+
+    echo "${SSH_TMP_ADD} was touched..."
+    start_or_recover
+  fi
+}
+
 osType=$(uname)
 
 # Handle for only OSX (Darwin) for now. This should only be called if it's a
 # TTY; not PTS (pseudo TTY) or STY (pseudo screen TTY). Meaning it can't be a
 # SSH session; it has to be a physical login.
-if [ -z "${SSH_TTY}" ] && [ $osType == "Darwin" -o $osType == "Linux" ]
+if [ $osType == "Darwin" -o $osType == "Linux" ] && [ -z "${SSH_TTY}" ]
 then
 
-  # Create SSH_TMP lock
-  if ( set -o noclobber; test ! -e ${SSH_TMP} && echo $$ > ${SSH_TMP} ) 2> /dev/null
+  which flock
+  if [ "$?" == 0 ]
   then
 
-      start_or_recover
+    (
+      flock -x -n 200
 
-      # Make sure it's touched again so it doesn't get deleted too early
-      touch ${SSH_TMP_ADD}
+      if [ "$?" == 0 ]
+      then
+        echo "Got Lock"
+        start_or_recover
+
+        # Make sure it's touched again so it doesn't get deleted too early
+        touch ${SSH_TMP_ADD}
+
+        rm -vf ${SSH_LOCK}
+      else
+        echo "Failed to get Lock"
+        wait_and_recover
+      fi
+
+
+    ) 200> ${SSH_LOCK}
+
   else
-    if [ -e ${SSH_TMP_ADD} ]
+
+    # Create SSH_TMP lock
+    if ( set -o noclobber; test ! -e ${SSH_TMP} && echo $$ > ${SSH_TMP} ) 2> /dev/null
     then
-      # Nothing to wait for... just do it
+
       start_or_recover
 
       # Make sure it's touched again so it doesn't get deleted too early
       touch ${SSH_TMP_ADD}
     else
-      # Wait for SSH keys to be added
-      echo "Waiting for ${SSH_TMP_ADD} to be created..."
-      while [ ! -e ${SSH_TMP_ADD} ]
-      do
-        sleep 5
-      done
-
-      echo "${SSH_TMP_ADD} was touched..."
-      start_or_recover
+      wait_and_recover
     fi
+
   fi
 
 fi

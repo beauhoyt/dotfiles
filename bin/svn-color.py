@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """
 Author: Saophalkun Ponlu (http://phalkunz.com)
@@ -45,6 +45,7 @@ statusColors = {
 
 
 def colorize(line):
+    line = line.decode('utf-8')
     for color in statusColors:
         if re.match(color, line):
             return ''.join(
