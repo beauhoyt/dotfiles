@@ -40,7 +40,7 @@ function start_or_recover {
   if [ -f "${SSH_ENV}" ]
   then
     echo "source ${SSH_ENV}"
-    source "${SSH_ENV}" > /dev/null
+    source ${SSH_ENV}
 
     # Restart SSH agent if it has crashed
     ps -ef | grep "${SSH_AGENT_PID}" | grep "ssh-agent" > /dev/null || {
@@ -65,6 +65,7 @@ function start_or_recover {
 }
 
 function wait_and_recover {
+
   if [ -e ${SSH_TMP_ADD} ]
   then
     # Nothing to wait for... just do it
@@ -97,25 +98,32 @@ then
   if [ "$?" == 0 ]
   then
 
+    tmpLockFileStatus=$(mktemp /tmp/ssh-agent-status.XXXXXXXXXX)
+    echo "1" > ${tmpLockFileStatus}
+
     (
-      flock -x -n 200
-
-      if [ "$?" == 0 ]
-      then
-        echo "Got Lock"
-        start_or_recover
-
-        # Make sure it's touched again so it doesn't get deleted too early
-        touch ${SSH_TMP_ADD}
-
-        rm -vf ${SSH_LOCK}
-      else
-        echo "Failed to get Lock"
-        wait_and_recover
-      fi
-
-
+      flock -x -n 200 || return
+      echo "$?" > ${tmpLockFileStatus}
+      sleep 2
     ) 200> ${SSH_LOCK}
+
+    if [ "$(cat ${tmpLockFileStatus})" == 0 ]
+    then
+
+      echo "Got Lock"
+      start_or_recover
+
+      # Make sure it's touched again so it doesn't get deleted too early
+      touch ${SSH_TMP_ADD}
+
+      rm -vf ${SSH_LOCK}
+    else
+
+      echo "Failed to get Lock"
+      wait_and_recover
+    fi
+
+    rm -f ${tmpLockFileStatus}
 
   else
 
@@ -128,6 +136,7 @@ then
       # Make sure it's touched again so it doesn't get deleted too early
       touch ${SSH_TMP_ADD}
     else
+
       wait_and_recover
     fi
 
