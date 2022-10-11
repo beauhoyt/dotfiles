@@ -86,6 +86,15 @@ function wait_and_recover {
   fi
 }
 
+function sleep_count_down {
+  local secs=${1}
+  while [ $secs -gt 0 ]; do
+     echo -ne "$secs\033[0K\r"
+     sleep 1
+     : $((secs--))
+  done
+}
+
 osType=$(uname)
 
 # Handle for only OSX (Darwin) for now. This should only be called if it's a
@@ -98,17 +107,18 @@ then
   if [ "$?" == 0 ]
   then
 
-    tmpLockFileStatus=$(mktemp /tmp/ssh-agent-status.XXXXXXXXXX)
-    echo "1" > ${tmpLockFileStatus}
+    #tmpLockFileStatus=$(mktemp /tmp/ssh-agent-status.XXXXXXXXXX)
+    #echo "1" > ${tmpLockFileStatus}
 
     (
-      flock -x -n 200 || return
-      echo "$?" > ${tmpLockFileStatus}
-      sleep 2
-    ) 200> ${SSH_LOCK}
+      flock -x -n 200 || return 1
+      #echo "$?" > ${tmpLockFileStatus}
 
-    if [ "$(cat ${tmpLockFileStatus})" == 0 ]
-    then
+      if [ ! -f ${SSH_TMP_ADD} ]
+      then
+        echo "Giving time exit if double locks acquired"
+        sleep_count_down 120
+      fi
 
       echo "Got Lock"
       start_or_recover
@@ -117,14 +127,21 @@ then
       touch ${SSH_TMP_ADD}
 
       rm -vf ${SSH_LOCK}
+    ) 200> ${SSH_LOCK}
+
+    #if [ "$(cat ${tmpLockFileStatus})" == 0 ]
+    if [ "$?" == 0 ]
+    then
+
+      # reload SSH_ENV file because of scoping issues created by the parentheses
+      source ${SSH_ENV}
     else
 
       echo "Failed to get Lock"
       wait_and_recover
     fi
 
-    rm -f ${tmpLockFileStatus}
-
+    #rm -f ${tmpLockFileStatus}
   else
 
     # Create SSH_TMP lock
@@ -139,7 +156,5 @@ then
 
       wait_and_recover
     fi
-
   fi
-
 fi
