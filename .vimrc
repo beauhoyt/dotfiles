@@ -2,9 +2,6 @@
 " Personal .vimrc by Beau Hoyt "
 " ============================================================================
 
-" Fix vim color with screen
-set t_Co=256
-
 " Automatic reloading of .vimrc
 autocmd! bufwritepost .vimrc source %
 
@@ -173,39 +170,11 @@ set laststatus=2
 " Map <F8> to toggle the Tagbar window
 nmap <F8> :TagbarToggle<CR>
 
-if has('nvim')
 
-" Required:
-set runtimepath+=~/.vim/bundles/repos/github.com/Shougo/dein.vim
+" NeoComplete
+" https://github.com/Shougo/neocomplete.vim
+let g:neocomplete#enable_at_startup = 1
 
-" Required:
-if dein#load_state('~/.vim/bundles')
-  call dein#begin('~/.vim/bundles')
-
-  " Let dein manage dein
-  " Required:
-  call dein#add('~/.vim/bundles/repos/github.com/Shougo/dein.vim')
-
-  " Add or remove your plugins here:
-  " call dein#add('Shougo/neosnippet.vim')
-  " call dein#add('Shougo/neosnippet-snippets')
-  call dein#add('Shougo/deoplete.nvim')
-
-  " You can specify revision/branch/tag.
-  " call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
-
-  " Required:
-  call dein#end()
-  call dein#save_state()
-endif
-
-else
-
-    " NeoComplete
-    " https://github.com/Shougo/neocomplete.vim
-    let g:neocomplete#enable_at_startup = 1
-
-endif
 
 " ============================================================================
 " Go IDE Setup
