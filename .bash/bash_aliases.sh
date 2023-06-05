@@ -89,12 +89,38 @@ alias bogo='cd ~/go/src/github.com/beauhoyt'
 alias sshOldSwitch='ssh -oKexAlgorithms=diffie-hellman-group-exchange-sha1 -c aes128-cbc -A'
 
 removeSshKeyForHost() {
-  echo "Removing SSH Keys for Host: $1" ; ssh-keygen -r $1 ; ssh-keygen -R $1
+  echo "Cleanup pub keys in ~/.ssh/known_hosts for host: $1"
+  ssh-keygen -r $1
+  ssh-keygen -R $1
+  echo "Re-adding pub keys to ~/.ssh/known_hosts for host: $1"
+  ssh-keyscan $1 >> ~/.ssh/known_hosts
+  echo "Testing SSH to host: $1"
+  ssh -A $1 'hostname'
+  if [ $? ]
+  then
+    echo "Host $1 Test Successful!!"
+  else
+    echo "Host $1 Test Failed!! :("
+  fi
 }
 
 removeSshKeyForDeploy() {
   echo "Remove SSH Keys for Host: $2 on $1 server"
-  ssh -A $1 'hostname; sudo -u deploy -i ssh-keygen -r '$2' ; sudo -u deploy -i ssh-keygen -R '$2' '
+  ssh -A $1 '
+  hostname ;
+  sudo -u deploy -i ssh-keygen -r '$2' ;
+  sudo -u deploy -i ssh-keygen -R '$2' ;
+  echo "Re-adding pub keys to /home/deploy/.ssh/known_hosts for host: '$2'"
+  sudo -u deploy ssh-keyscan '$2' >> /home/deploy/.ssh/known_hosts
+  echo "Testing SSH to host: '$2'"
+  sudo -u deploy ssh -A '$2' "hostname"
+  if [ $? ] ;
+  then
+    echo "Host '$2' Test Successful through '$1' server!!" ;
+  else
+    echo "Host '$2' Test Failed through '$1' server!! :((((" ;
+  fi ;
+  '
 }
 
 reloginForDeploy() {
@@ -103,4 +129,9 @@ reloginForDeploy() {
     hostname ;
     sudo -H -u deploy -i /bin/ssh -t -i .ssh/id_rsa '$2' "hostname"
   '
+}
+
+cssh() {
+  removeSshKeyForHost $1
+  ssh -A $1
 }

@@ -50,6 +50,12 @@ vercomp () {
     return 0
 }
 
+jdk() {
+   version=$1
+   export JAVA_HOME=$(/usr/libexec/java_home -v"$version");
+   java -version
+}
+
 # Xterm support
 if [ -n "${DISPLAY}" -a "${TERM}" = "xterm" ]
 then
@@ -64,8 +70,8 @@ fi
 pathadd "${HOME}/.cargo/bin" "after"
 
 # GO lang path
-export GOPATH="${HOME}/go"
-pathadd "${GOPATH}/bin" "after"
+#export GOPATH="${HOME}/go"
+#pathadd "${GOPATH}/bin" "after"
 
 if [ ${osType} == "Darwin" ]
 then
@@ -75,11 +81,22 @@ then
         source ${HOME}/.bash_exports_homebrew_github_api_token
     fi
 
+    # Chat GPT
+    if [ -e "${HOME}/.bash_exports_chatgpt_api_token" ]
+    then
+        source ${HOME}/.bash_exports_chatgpt_api_token
+    fi
+
     # MacVim
     if [ -d "/Applications" ]
     then
         export VIM_APP_DIR="/Applications"
     fi
+
+    # For LLVM
+    export LDFLAGS="-L/usr/local/opt/llvm/lib"
+    export CPPFLAGS="-I/usr/local/opt/llvm/include"
+    pathadd "/usr/local/opt/llvm/bin" "after"
 
     # If you invoke the bash shell while macOS Catalina is configured to use a
     # different shell, you'll see a message that the default interactive shell
@@ -94,6 +111,8 @@ then
     fi
 
     pathadd "/usr/local/opt/go/libexec/bin" "after"
+
+    pathadd "/Users/beau/Library/Python/3.11/bin/" "after"
 else
     pathadd "/usr/local/go/bin" "after"
 fi
