@@ -43,7 +43,7 @@ function start_or_recover {
     source ${SSH_ENV}
 
     # Restart SSH agent if it has crashed
-    ps -ef | grep "${SSH_AGENT_PID}" | grep "ssh-agent" > /dev/null || {
+    ps -ef | \grep "${SSH_AGENT_PID}" | \grep -v grep | \grep "ssh-agent" > /dev/null || {
       start_ssh_agent
     }
 
