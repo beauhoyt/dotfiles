@@ -44,6 +44,18 @@ then
                 /bin/echo "Error: invalid response: $(/usr/bin/defaults read com.apple.finder AppleShowAllFiles)"
                 ;;
         esac'
+
+        function fixMissionControl() {
+            defaults delete com.apple.dock mcx-expose-disabled
+            defaults delete com.apple.dock expose-animation-duration
+            defaults delete com.apple.dock expose-group-by-app
+            defaults delete com.apple.dock expose-grouped
+            defaults delete com.apple.dock "expose-last-active-sticky"
+            defaults delete com.apple.dock "expose-layout"
+            defaults delete com.apple.dock "expose-space-animation-duration"
+            defaults delete com.apple.dock "expose-thumbnail-size"
+            killall Dock
+        }
     fi
 # Solaris
 elif [ ${osType} == "SunOS" ]
