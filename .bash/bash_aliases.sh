@@ -56,6 +56,8 @@ then
             defaults delete com.apple.dock "expose-thumbnail-size"
             killall Dock
         }
+
+        alias startMumble="open -n /Applications/Mumble.app --args -m"
     fi
 # Solaris
 elif [ ${osType} == "SunOS" ]
