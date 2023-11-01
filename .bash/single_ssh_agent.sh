@@ -1,6 +1,8 @@
-#!/bin/bash
 # Fix ssh-agent 6.9+ to work on OSX
 # So you can use ed25519 and ecdsa
+# works in zsh and bash, must run via `source /path/to/single_ssh_agent.sh`
+
+which flock > /dev/null || ( echo "flock must be installed" && return 1 )
 
 # File to hold existing SSH agent sesssion
 WHOAMI_USER="$(whoami)"
@@ -100,24 +102,24 @@ osType=$(uname)
 # Handle for only OSX (Darwin) for now. This should only be called if it's a
 # TTY; not PTS (pseudo TTY) or STY (pseudo screen TTY). Meaning it can't be a
 # SSH session; it has to be a physical login.
-if [ $osType == "Darwin" -o $osType == "Linux" ] && [ -z "${SSH_TTY}" ]
+if [ $osType = "Darwin" -o $osType = "Linux" ] && [ -z "${SSH_TTY}" ]
 then
 
   which flock
-  if [ "$?" == 0 ]
+  if [ "$?" = 0 ]
   then
 
     #tmpLockFileStatus=$(mktemp /tmp/ssh-agent-status.XXXXXXXXXX)
     #echo "1" > ${tmpLockFileStatus}
 
     (
-      flock -x -n 200 || return 1
+      flock -x -n 8 || return 1
       #echo "$?" > ${tmpLockFileStatus}
 
       if [ ! -f ${SSH_TMP_ADD} ]
       then
         echo "Giving time exit if double locks acquired"
-        sleep_count_down 120
+        sleep_count_down 5
       fi
 
       echo "Got Lock"
@@ -127,10 +129,10 @@ then
       touch ${SSH_TMP_ADD}
 
       rm -vf ${SSH_LOCK}
-    ) 200> ${SSH_LOCK}
+    ) 8> ${SSH_LOCK}
 
-    #if [ "$(cat ${tmpLockFileStatus})" == 0 ]
-    if [ "$?" == 0 ]
+    #if [ "$(cat ${tmpLockFileStatus})" = 0 ]
+    if [ "$?" = 0 ]
     then
 
       # reload SSH_ENV file because of scoping issues created by the parentheses
