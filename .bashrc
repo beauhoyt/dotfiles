@@ -8,7 +8,7 @@ then
 fi
 
 # Source in extra aliases
-for i in ~/.bash/*.sh; do
+for i in ~/.include/*.sh; do
     if [ -r "$i" ]; then
         if [ "$PS1" ]; then
             source "$i"
@@ -23,16 +23,6 @@ unset i
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if [ `uname` = 'Darwin' ]; then
-    # This code chuck might not be needed anymore with:
-    #  brew install bash-completion
-    # if [ -f `brew --prefix`/etc/bash_completion ]; then
-    #     source `brew --prefix`/etc/bash_completion
-    # fi
-    # if [ -d `brew --prefix`/etc/bash_completion.d ]; then
-    #     for i in $(ls -1 `brew --prefix`/etc/bash_completion.d); do
-    #         source `brew --prefix`/etc/bash_completion.d/${i}
-    #     done
-    # fi
     # Run /usr/local/etc/profile.d/bash_completion.sh
     if [ -r /usr/local/etc/profile.d/bash_completion.sh ]
     then
@@ -53,10 +43,7 @@ if [ -f /usr/local/bin/aws_completer ]; then
   complete -C '/usr/local/bin/aws_completer' aws
 fi
 
-if [ -f /usr/local/bin/aws_completer ]; then
-  complete -C '/usr/local/bin/aws_completer' aws
-fi
-
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
+
