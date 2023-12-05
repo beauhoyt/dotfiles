@@ -69,10 +69,6 @@ fi
 # Rust lang path
 pathadd "${HOME}/.cargo/bin" "after"
 
-# GO lang path
-#export GOPATH="${HOME}/go"
-#pathadd "${GOPATH}/bin" "after"
-
 if [ ${osType} == "Darwin" ]
 then
     # Homebrew Github API Token for higher ratelimit on brew commands
@@ -112,7 +108,9 @@ then
 
     pathadd "/usr/local/opt/go/libexec/bin" "after"
 
-    pathadd "/Users/beau/Library/Python/3.11/bin/" "after"
+    pathadd "/Users/beau/Library/Python/3.11/bin" "after"
+
+    pathadd "/usr/local/opt/ruby/bin"
 else
     pathadd "/usr/local/go/bin" "after"
 fi

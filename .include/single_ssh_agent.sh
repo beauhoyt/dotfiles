@@ -4,8 +4,11 @@
 
 which flock > /dev/null || ( echo "flock must be installed" && return 1 )
 
-# File to hold existing SSH agent sesssion
 WHOAMI_USER="$(whoami)"
+OS_TYPE="$(uname)"
+SLEEP_COUNTDOWN=120
+
+# File to hold existing SSH agent sesssion
 SSH_ENV="${HOME}/.ssh/environment"
 SSH_LOCK="/tmp/ssh-agent-lock-${WHOAMI_USER}"
 SSH_TMP="/tmp/ssh-agent-${WHOAMI_USER}"
@@ -14,6 +17,7 @@ SSH_TMP_ADD="/tmp/ssh-agent-add-${WHOAMI_USER}"
 SSH_AGENT_BIN="/usr/bin/ssh-agent"
 SSH_ADD_BIN="/usr/bin/ssh-add"
 
+# Check for other install locations
 if [ -e "/usr/local/bin/ssh-agent" ]
 then
   SSH_AGENT_BIN="/usr/local/bin/ssh-agent"
@@ -26,14 +30,14 @@ fi
 function start_ssh_agent {
 
   echo "Initializing new SSH agent..."
-  $SSH_AGENT_BIN -s | sed 's/^echo/#echo/' > ${SSH_ENV}
+  ${SSH_AGENT_BIN} -s | sed 's/^echo/#echo/' > ${SSH_ENV}
   chmod 0600 ${SSH_ENV}
   source ${SSH_ENV} > /dev/null
   echo "DONE Initializing..."
   echo ""
   echo "Adding Keys..."
-  $SSH_ADD_BIN &&
-  touch $SSH_TMP_ADD
+  ${SSH_ADD_BIN} &&
+  touch ${SSH_TMP_ADD}
 }
 
 function start_or_recover {
@@ -97,29 +101,23 @@ function sleep_count_down {
   done
 }
 
-osType=$(uname)
-
 # Handle for only OSX (Darwin) for now. This should only be called if it's a
 # TTY; not PTS (pseudo TTY) or STY (pseudo screen TTY). Meaning it can't be a
 # SSH session; it has to be a physical login.
-if [ $osType = "Darwin" -o $osType = "Linux" ] && [ -z "${SSH_TTY}" ]
+if [ ${OS_TYPE} = "Darwin" -o ${OS_TYPE} = "Linux" ] && [ -z "${SSH_TTY}" ]
 then
 
   which flock
   if [ "$?" = 0 ]
   then
 
-    #tmpLockFileStatus=$(mktemp /tmp/ssh-agent-status.XXXXXXXXXX)
-    #echo "1" > ${tmpLockFileStatus}
-
     (
       flock -x -n 8 || return 1
-      #echo "$?" > ${tmpLockFileStatus}
 
       if [ ! -f ${SSH_TMP_ADD} ]
       then
         echo "Giving time exit if double locks acquired"
-        sleep_count_down 5
+        sleep_count_down ${SLEEP_COUNTDOWN}
       fi
 
       echo "Got Lock"
@@ -131,7 +129,6 @@ then
       rm -vf ${SSH_LOCK}
     ) 8> ${SSH_LOCK}
 
-    #if [ "$(cat ${tmpLockFileStatus})" = 0 ]
     if [ "$?" = 0 ]
     then
 
@@ -140,10 +137,10 @@ then
     else
 
       echo "Failed to get Lock"
+      echo "If this gets stuck rm -vf ${SSH_ENV} ${SSH_LOCK} ${SSH_TMP} ${SSH_TMP_ADD} then restart computer"
       wait_and_recover
     fi
 
-    #rm -f ${tmpLockFileStatus}
   else
 
     # Create SSH_TMP lock
@@ -156,6 +153,8 @@ then
       touch ${SSH_TMP_ADD}
     else
 
+      echo "Failed to get Lock"
+      echo "If this gets stuck rm -vf ${SSH_ENV} ${SSH_LOCK} ${SSH_TMP} ${SSH_TMP_ADD} then restart computer"
       wait_and_recover
     fi
   fi
