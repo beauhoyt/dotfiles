@@ -33,14 +33,14 @@ colorizedSubcommands = (
 
 statusColors = {
     "M":    "31",     # red
-    "\?":   "37",     # grey
+    r"\?":   "37",     # grey
     "A":    "32",     # green
     "X":    "33",     # yellow
     "C":    "30;41",  # black on red
     "-":    "31",     # red
     "D":    "31;1",   # bold red
-    "\+":   "32",     # green
-    "r\d+": "33",     # yellow
+    r"\+":   "32",     # green
+    r"r\d+": "33",     # yellow
 }
 
 

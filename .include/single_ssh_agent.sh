@@ -107,16 +107,30 @@ function sleep_count_down {
 if [ ${OS_TYPE} = "Darwin" -o ${OS_TYPE} = "Linux" ] && [ -z "${SSH_TTY}" ]
 then
 
-  which flock
-  if [ "$?" = 0 ]
+  export | \grep iterm > /dev/null 2>&1
+  isIterm=$?
+
+  which flock > /dev/null 2>&1
+  isFlock=$?
+
+  if [ "${isIterm}" != 0 ]
+  then
+
+      echo "This is not an iTerm please wait..."
+      wait_and_recover
+  elif [ "${isFlock}" = 0 ]
   then
 
     (
       flock -x -n 8 || return 1
 
+      echo "##################################################################"
+      echo "#                        I GOT THE LOCK                          #"
+      echo "##################################################################"
+
       if [ ! -f ${SSH_TMP_ADD} ]
       then
-        echo "Giving time exit if double locks acquired"
+        echo "Giving time exit if double locks acquired. If not intended rm -vf ${SSH_TMP_ADD}"
         sleep_count_down ${SLEEP_COUNTDOWN}
       fi
 
@@ -143,6 +157,8 @@ then
 
   else
 
+    echo "Failed checking on which flock"
+
     # Create SSH_TMP lock
     if ( set -o noclobber; test ! -e ${SSH_TMP} && echo $$ > ${SSH_TMP} ) 2> /dev/null
     then
@@ -153,7 +169,7 @@ then
       touch ${SSH_TMP_ADD}
     else
 
-      echo "Failed to get Lock"
+      echo "Failed to get Lock in old way"
       echo "If this gets stuck rm -vf ${SSH_ENV} ${SSH_LOCK} ${SSH_TMP} ${SSH_TMP_ADD} then restart computer"
       wait_and_recover
     fi
